@@ -3,8 +3,8 @@
   "description": "Math puzzle game.",
   "launch_path": "/index.html",
   "icons": {
-    "128": "img/icon-128.png",
-    "256": "img/icon-256.png"
+    "128": "/img/icon-128.png",
+    "256": "/img/icon-256.png"
   },
   "developer": {
     "name": "getsnoopy",
