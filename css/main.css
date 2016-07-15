@@ -255,8 +255,8 @@ h2 {
 
 #game > .controls button, #game > .controls select {
     position: relative;
-    margin: 0 1rem;
-    padding: 0.4rem 0.8rem;
+    margin: 0 0.5rem;
+    padding: 0.3rem 0.5rem;
     background: #efefef;
     font-size: 0.9em;
     border: none;
