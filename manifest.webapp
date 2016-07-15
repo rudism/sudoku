@@ -6,6 +6,7 @@
     "128": "/img/icon-128.png",
     "256": "/img/icon-256.png"
   },
+  "orientation": ["portrait-primary"],
   "developer": {
     "name": "getsnoopy",
     "url": "https://github.com/rudism/sudoku"
