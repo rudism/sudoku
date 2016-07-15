@@ -6,7 +6,6 @@
         <title>Sudoku</title>
         <meta name="description" content="The classic puzzle game in a modern, mobile-first version.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
@@ -16,7 +15,6 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <h1>Sudoku</h1>
-        <h2>The classic puzzle game in a modern, mobile-first version.</h2>
         <div id="game" class="clearfix">
             <div class="board">
                 <div class="finished-overlay invisible"><span>You Won!</span></div>
@@ -24,24 +22,18 @@
             <div class="controls">
                 <button data-action="restart">Restart</button>
                 <button data-action="new">New Game</button>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                    <option value="very-hard">Very Hard</option>
+                    <option value="insane">Insane</option>
+                    <option value="inhuman">Inhuman</option>
+                </select>
             </div>
         </div>
-        <script type="text/javascript">
-            WebFontConfig = {
-                google: { families: [ 'Open+Sans:400,700:latin' ] }
-            };
-            (function() {
-                var wf = document.createElement('script');
-                wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-                wf.type = 'text/javascript';
-                wf.async = 'true';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(wf, s);
-            })();
-        </script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write( '<script src="js/vendor/jquery-1.11.1.min.js"><\/script>' )</script>
+        <script src="js/vendor/jquery-1.11.1.min.js"></script>
+        <script src="js/generator.js"></script>
         <script src="js/sudoku.js" async></script>
         <script src="js/sudoku-view.js" async></script>
         <script src="js/main.js" async></script>

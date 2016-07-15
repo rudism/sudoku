@@ -83,11 +83,17 @@ $.extend( true, SudokuView.prototype, {
             var cell = $( this ).closest( '.number-picker' ).closest( 'td' );
             var number = $( this ).text();
 
-            _this._game.update( _this._calculateArrayPosition( cell ), number );
-            _this.update( cell, number );
-            _this.hideNumberPicker();
-            if( _this._game.isSolved() ) {
-                _this.finish();
+            if(number == 'Clear') {
+              _this._game.clear( _this._calculateArrayPosition( cell ) );
+              _this.clear( cell );
+              _this.hideNumberPicker();
+            } else {
+              _this._game.update( _this._calculateArrayPosition( cell ), number );
+              _this.update( cell, number );
+              _this.hideNumberPicker();
+              if( _this._game.isSolved() ) {
+                  _this.finish();
+              }
             }
         });
 
@@ -175,6 +181,9 @@ $.extend( true, SudokuView.prototype, {
                 row.append( $( '<td/>' ).text( (3 * i) + 2 ) );
                 row.append( $( '<td/>' ).text( (3 * i) + 3 ) );
             }
+
+            var clear = $('<tr class="np-row"></tr>').append( $('<td class="clear" colspan="3" />').text('Clear'));
+            clear.appendTo( this.numberPicker );
         }
     },
 
@@ -264,7 +273,8 @@ $.extend( true, SudokuView.prototype, {
         if( validNumbers ) {
             var isValid;
             this.numberPicker.find( 'td' ).each( function() {
-                isValid = validNumbers.betterIndexOf( parseInt( $( this ).text() ) ) !== -1;
+                isValid = validNumbers.indexOf( parseInt( $( this ).text() ) ) !== -1
+                  || $( this ).hasClass('clear');
                 $( this ).toggleClass( 'disabled', !isValid );
             });
         }

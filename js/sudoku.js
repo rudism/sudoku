@@ -46,7 +46,7 @@ var Sudoku = function() {
      *
      * @type {Array}
      */
-    this.solution = [];
+    //this.solution = [];
 
 };
 
@@ -83,46 +83,15 @@ $.extend( true, Sudoku.prototype, {
         this.boardSize = 9;
 
         // Initialize board
-        this.board = [
-            '5 3 0 ' + '0 7 0 ' + '0 0 0',
-            '6 0 0 ' + '1 9 5 ' + '0 0 0',
-            '0 9 8 ' + '0 0 0 ' + '0 6 0',
-
-            '8 0 0 ' + '0 6 0 ' + '0 0 3',
-            '4 0 0 ' + '8 0 3 ' + '0 0 1',
-            '7 0 0 ' + '0 2 0 ' + '0 0 6',
-
-            '0 6 0 ' + '0 0 0 ' + '2 8 0',
-            '0 0 0 ' + '4 1 9 ' + '0 0 5',
-            '0 0 0 ' + '0 8 0 ' + '0 7 9'
-        ];
-        for ( i = 0; i < this.boardSize; i++ ) {
-            this.board[i] = this.board[i].split( ' ' );
-        };
+        var difficulty = $('#difficulty option:selected').val();
+        var boardString = sudoku.generate(difficulty);
+        this.board = sudoku.board_string_to_grid(boardString.replace(/\./g, '0'));
 
         // Set number of filled cells
-        this.filledCells = 30;
+        this.filledCells = 81 - (boardString.match(/\./g) || []).length;
 
         // Keep a copy of the initial board
         this.initialBoard = $.extend( true, [], this.board );
-
-        // Initialize corresponding solution
-        this.solution = [
-            '5 3 4 ' + '6 7 8 ' + '9 1 2',
-            '6 7 2 ' + '1 9 5 ' + '3 4 8',
-            '1 9 8 ' + '3 4 2 ' + '5 6 7',
-
-            '8 5 9 ' + '7 6 1 ' + '4 2 3',
-            '4 2 6 ' + '8 5 3 ' + '7 9 1',
-            '7 1 3 ' + '9 2 4 ' + '8 5 6',
-
-            '9 6 1 ' + '5 3 7 ' + '2 8 4',
-            '2 8 7 ' + '4 1 9 ' + '6 3 5',
-            '3 4 5 ' + '2 8 6 ' + '1 7 9'
-        ];
-        for ( i = 0; i < this.boardSize; i++ ) {
-            this.solution[i] = this.solution[i].split( ' ' );
-        };
 
         return this.board;
     },
@@ -150,11 +119,13 @@ $.extend( true, Sudoku.prototype, {
                 if( this.board[i][j] == 0 ) {
                     return false;
                 }
-
-                if( this.board[i][j] != this.solution[i][j] ) {
-                    return false;
-                }
             }
+        }
+
+        // verify that it is a valid solution
+        var boardString = sudoku.board_grid_to_string(this.board).replace(/0/g, '.');
+        if(!sudoku.get_candidates(boardString)) {
+          return false;
         }
 
         return true;
@@ -210,7 +181,7 @@ $.extend( true, Sudoku.prototype, {
             if( this.board[position.row][i] != 0 ) {
                 // Remove number that's been used from the valid numbers
                 // Note: Converting array items to numbers to make types compatible
-                index = validNumbers.betterIndexOf( +this.board[position.row][i] );
+                index = validNumbers.indexOf( +this.board[position.row][i] );
                 if( index !== -1 ) {
                     validNumbers.splice( index, 1 );
                 }
@@ -222,7 +193,7 @@ $.extend( true, Sudoku.prototype, {
             if( this.board[i][position.column] != 0 ) {
                 // Remove number that's been used from the valid numbers
                 // Note: Converting array items to numbers to make types compatible
-                index = validNumbers.betterIndexOf( +this.board[i][position.column] );
+                index = validNumbers.indexOf( +this.board[i][position.column] );
                 if( index !== -1 ) {
                     validNumbers.splice( index, 1 );
                 }
@@ -239,7 +210,7 @@ $.extend( true, Sudoku.prototype, {
                 if( this.board[i][j] != 0 ) {
                     // Remove number that's been used from the valid numbers
                     // Note: Converting array items to numbers to make types compatible
-                    index = validNumbers.betterIndexOf( +this.board[i][j] );
+                    index = validNumbers.indexOf( +this.board[i][j] );
                     if( index !== -1 ) {
                         validNumbers.splice( index, 1 );
                     }
